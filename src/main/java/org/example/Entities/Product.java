@@ -1,30 +1,36 @@
 package org.example.Entities;
 
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "Product")
-
 public class Product {
     @Id
-
     private String id;
     private String name;
     private String description;
     private double price;
     private int quantity;
     private String image;
+    private String categoryId;
 
-
-    public Product(String id, String name, String description, double price, int quantity) {
+    public Product(String id, String name, String description, double price, int quantity, String categoryId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.quantity = quantity;
+        this.categoryId = categoryId;
         this.image = image;
     }
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
 
     public void setImage(String image) {
         this.image = image;

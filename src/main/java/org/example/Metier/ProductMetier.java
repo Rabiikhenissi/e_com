@@ -6,26 +6,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service
 
+@Service
 public class ProductMetier {
     @Autowired
     private ProductDao productRepository;
 
+    @Autowired
+    private CategorieMetier categorieMetier;
 
-    //List All Prducts
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
-
 
     public Product getProductById(String id) {
         return productRepository.findById(id).orElse(null);
     }
 
     public Product addProduct(Product product) {
+        if (categorieMetier.getCategorieById(product.getCategoryId()) == null) {
+        }
         return productRepository.save(product);
     }
+
     public Product updateProduct(String id, Product updatedProduct) {
         return productRepository.findById(id).map(product -> {
             product.setName(updatedProduct.getName());
@@ -33,6 +36,7 @@ public class ProductMetier {
             product.setPrice(updatedProduct.getPrice());
             product.setQuantity(updatedProduct.getQuantity());
             product.setImage(updatedProduct.getImage());
+            product.setCategoryId(updatedProduct.getCategoryId());
             return productRepository.save(product);
         }).orElse(null);
     }
